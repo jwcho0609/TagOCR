@@ -255,7 +255,7 @@ class MainWindow(QWidget):
         self.quitBtn.clicked.connect(self.quitAct)
         self.scanBtn.clicked.connect(self.scan)
 
-        self.setWindowTitle('My First Application')
+        self.setWindowTitle('TagOCR by The Bee\'s Knees')
         self.showMaximized()
 
     def scan(self):
@@ -294,5 +294,6 @@ class MainWindow(QWidget):
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
+    app.setWindowIcon(QIcon('source/beeLogo.png'))
     ex = MainWindow()
     sys.exit(app.exec_())
