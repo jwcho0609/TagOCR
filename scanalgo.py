@@ -48,7 +48,7 @@ class ScanAlgo:
 
         # self.performOCR([self.frame1, self.frame2, self.frame3])
         i = random.randint(1, 6)
-        tester = cv2.imread(f'test{i}.jpg')
+        tester = cv2.imread(f'test/test{i}.jpg')
         print(f'test{i}.jpg')
         self.performOCR([tester])
 

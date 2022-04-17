@@ -206,7 +206,7 @@ class MainWindow(QWidget):
 
         # Button for opening settings
         self.setBtn = QPushButton()
-        self.setBtn.setIcon(QIcon('icon_setting.png'))
+        self.setBtn.setIcon(QIcon('source/icon_setting.png'))
         self.setBtn.setIconSize(QtCore.QSize(60, 60))
         self.setBtn.clicked.connect(self.settings_window)
         self.setBtn.setFixedSize(100, 100)
