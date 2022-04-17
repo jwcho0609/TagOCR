@@ -1,3 +1,7 @@
+"""
+DataTools widget of the main GUI window and the global data lives on this script.
+"""
+
 from PyQt5.QtWidgets import *
 from PyQt5 import QtCore
 from PyQt5.QtCore import *

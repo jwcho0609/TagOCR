@@ -1,3 +1,7 @@
+"""
+All scanning algorithms related to OCR using Tesseract
+"""
+
 from time import sleep
 import cv2
 import pytesseract

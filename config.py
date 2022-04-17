@@ -1,5 +1,5 @@
 """
-Configuration file for initial set-up of motor
+Configuration file for initial set-up of motor.
 """
 
 from PyQt5.QtCore import QThreadPool
