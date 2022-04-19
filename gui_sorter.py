@@ -257,7 +257,7 @@ class MainWindow(QWidget):
         self.scanBtn.clicked.connect(self.scan)
 
         self.setWindowTitle('TagOCR by The Bee\'s Knees')
-        self.setFixedSize(720, 480)
+        self.setFixedSize(800, 480)
         self.show()
         # self.showMaximized()
 
