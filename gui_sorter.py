@@ -135,7 +135,7 @@ class CameraThread(QThread):
                 h, w, ch = rgbImage.shape
                 bytesPerLine = ch * w
                 convertToQtFormat = QImage(rgbImage.data, w, h, bytesPerLine, QImage.Format_RGB888)
-                p = convertToQtFormat.scaled(720, 800, Qt.KeepAspectRatio)
+                p = convertToQtFormat.scaled(480*(480/800), 480, Qt.KeepAspectRatio)
                 self.changePixmap.emit(p)
 
     def stop(self):
@@ -164,8 +164,8 @@ class MainWindow(QWidget):
 
         # Widget for the status box
         self.status = QLabel('status')
-        self.status.setFixedSize(900, 200)
-        self.status.setFont(QFont('Arial', 50))
+        self.status.setFixedSize(400, 25)
+        self.status.setFont(QFont('Arial', 25))
         self.status.setAlignment(QtCore.Qt.AlignCenter)
         self.status.setStyleSheet("color: blue;"
                                   "background-color: #87CEFA;"
@@ -175,8 +175,8 @@ class MainWindow(QWidget):
 
         # Widgets for each material
         self.poly = QLabel('Polyester\n0%')
-        self.poly.setFixedSize(300, 100)
-        self.poly.setFont(QFont('Arial', 20))
+        self.poly.setFixedSize(100, 25)
+        self.poly.setFont(QFont('Arial', 10))
         self.poly.setAlignment(QtCore.Qt.AlignCenter)
         self.poly.setStyleSheet("color: blue;"
                                 "background-color: #87CEFA;"
@@ -185,9 +185,9 @@ class MainWindow(QWidget):
                                 "border-color: #1E90FF")
 
         self.span = QLabel('Spandex\n0%')
-        self.span.setFixedSize(300, 100)
+        self.span.setFixedSize(100, 25)
         self.span.setAlignment(QtCore.Qt.AlignCenter)
-        self.span.setFont(QFont('Arial', 20))
+        self.span.setFont(QFont('Arial', 10))
         self.span.setStyleSheet("color: blue;"
                                 "background-color: #87CEFA;"
                                 "border-style: solid;"
@@ -195,9 +195,9 @@ class MainWindow(QWidget):
                                 "border-color: #1E90FF")
 
         self.cot = QLabel('Cotton\n0%')
-        self.cot.setFixedSize(300, 100)
+        self.cot.setFixedSize(100, 25)
         self.cot.setAlignment(QtCore.Qt.AlignCenter)
-        self.cot.setFont(QFont('Arial', 20))
+        self.cot.setFont(QFont('Arial', 10))
         self.cot.setStyleSheet("color: blue;"
                                "background-color: #87CEFA;"
                                "border-style: solid;"
@@ -211,23 +211,24 @@ class MainWindow(QWidget):
         # Button for opening settings
         self.setBtn = QPushButton()
         self.setBtn.setIcon(QIcon('source/icon_setting.png'))
-        self.setBtn.setIconSize(QtCore.QSize(60, 60))
+        self.setBtn.setIconSize(QtCore.QSize(30, 30))
         self.setBtn.clicked.connect(self.settings_window)
-        self.setBtn.setFixedSize(100, 100)
+        self.setBtn.setFixedSize(50, 50)
 
         # Widget for quitting the app
         self.quitBtn = QPushButton('Quit', self)
-        self.quitBtn.setFixedSize(100, 100)
+        self.quitBtn.setFixedSize(50, 50)
 
         # Right panel buttons
         self.scanBtn = QPushButton('Scan', self)
-        self.scanBtn.setFixedSize(400, 100)
-        self.scanBtn.setFont(QFont('Arial', 30))
+        self.scanBtn.setFixedSize(200, 50)
+        self.scanBtn.setFont(QFont('Arial', 15))
 
         self.tools = datatools.DataTools()
 
         # camera
-        self.label2 = QLabel()
+        self.label2 =QLabel()
+        self.label2.setFrameShape(QFrame.NoFrame)
         self.th = CameraThread(self)
         self.th.changePixmap.connect(self.setImage)
         self.th.start()
@@ -256,7 +257,9 @@ class MainWindow(QWidget):
         self.scanBtn.clicked.connect(self.scan)
 
         self.setWindowTitle('TagOCR by The Bee\'s Knees')
-        self.showMaximized()
+        self.setFixedSize(800, 480)
+        self.show()
+        # self.showMaximized()
 
     def scan(self):
         self.status.setText("Scanning")
