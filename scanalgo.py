@@ -14,6 +14,7 @@ import random
 import RPi.GPIO as GPIO
 
 import datatools
+from gui_sorter import rescan
 
 led = 22
 # GPIO.setmode(GPIO.BOARD)
@@ -66,7 +67,10 @@ class ScanAlgo:
         GPIO.output(led, False)
         sleep(0.05)
 
-        self.performOCR([self.frame1])
+        out = self.performOCR([self.frame1])
+
+        if not out:
+            rescan()
         # i = random.randint(1, 6)
         # tester = cv2.imread(f'test/test{i}.jpg')
         # print(f'test{i}.jpg')
@@ -79,13 +83,13 @@ class ScanAlgo:
         for f in frames:
             print('testing loop entered')
             d = pytesseract.image_to_data(f, lang='eng+fra+spa', output_type=Output.DICT)
-            print(d['text'])              # print statement for checking parsed out text        self.span.setFixedSize(100, 25)
+            print(d['text'])  # print statement for checking parsed out text        self.span.setFixedSize(100, 25)
 
             # If 1 or less words recognized, please rescan
             print('testing')
             if len(d['text']) <= 1:
                 print("Please Rescan")
-                break
+                return 0
 
             # parse through the array of texts scanned
             for i in range(len(d['text'])):
@@ -131,6 +135,13 @@ class ScanAlgo:
 
         datatools.addItem(polyPer, spanPer, cotPer)
         GPIO.output(led, True)
+        return 1
 
-    def test(self):
-        print('testing in the scanning algorithm')
+    def setMain(self, mainWind):
+        mainWind.status.setStyleSheet("color: red;"
+                                      "background-color: #FF6464;")
+        mainWind.status.setText('Please rescan')
+        sleep(1)
+        mainWind.status.setStyleSheet("color: blue;"
+                                      "background-color: #87CEFA;")
+        mainWind.status.setText('status')

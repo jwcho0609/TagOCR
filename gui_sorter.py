@@ -142,8 +142,10 @@ class CameraThread(QThread):
 class MainWindow(QWidget):
 
     def __init__(self):
+        global scan_algo
         super().__init__()
         self.w = None
+        scan_algo.setMain(self)
         # Layout declaration
         hbox = QHBoxLayout()
         hboxBot = QHBoxLayout()
