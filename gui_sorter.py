@@ -277,9 +277,8 @@ class MainWindow(QWidget):
             event.ignore()
 
     def quitAct(self):
-        global scan_algo
         print('Quit')
-        scan_algo.test()
+        
 
 
 if __name__ == '__main__':
