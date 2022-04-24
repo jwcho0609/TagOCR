@@ -25,7 +25,7 @@ GPIO.setwarnings(False)
 
 
 class scanner(QRunnable):
-    def __init__(self, label, tools, scan, poly, span, cot):
+    def __init__(self, label, tools, scan, poly, span, cot, settings):
         super().__init__()
         self.status = label
         self.tools = tools
@@ -33,6 +33,7 @@ class scanner(QRunnable):
         self.poly = poly
         self.span = span
         self.cot = cot
+        self.settings = settings
 
     def run(self):
         global scan_algo
@@ -77,16 +78,6 @@ class scanner(QRunnable):
             self.status.setText("Unknown")
             self.tools.lastScan.setText('Unknown')
 
-        # else:
-        #     self.status.setStyleSheet("color: red;"
-        #                               "background-color: #FF6464;"
-        #                               "border-style: solid;"
-        #                               "border-width: 3px;"
-        #                               "border-color: #FA8072")
-        #     self.status.setText("Failed: scan again")
-        #
-        #     sleep(1)
-
         sleep(1.5)
         self.status.setStyleSheet("color: blue;"
                                   "background-color: #87CEFA;")
@@ -102,6 +93,10 @@ class scanner(QRunnable):
 
         self.status.setText("Status")
         self.scan.setEnabled(True)
+        drive()
+
+    def drive(self):
+        self.settings.test_drive()
 
 
 class CameraThread(QThread):
@@ -132,7 +127,7 @@ class MainWindow(QWidget):
     def __init__(self):
         global scan_algo
         super().__init__()
-        self.w = None
+        self.w = settings.SettingsWindow()
         # Layout declaration
         hbox = QHBoxLayout()
         hboxBot = QHBoxLayout()
@@ -251,15 +246,13 @@ class MainWindow(QWidget):
     def scan(self):
         self.status.setText("Scanning")
         self.scanBtn.setEnabled(False)
-        scanThread = scanner(self.status, self.tools, self.scanBtn, self.poly, self.span, self.cot)
+        scanThread = scanner(self.status, self.tools, self.scanBtn, self.poly, self.span, self.cot, self.w)
         c.pool.start(scanThread)
 
     def setImage(self, image):
         self.label2.setPixmap(QPixmap.fromImage(image))
 
     def settings_window(self):
-        if self.w is None:
-            self.w = settings.SettingsWindow()
         self.w.reset()
         self.w.setGeometry(0, 0, 300, 200)
         self.w.center()

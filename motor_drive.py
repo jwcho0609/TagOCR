@@ -58,6 +58,9 @@ steps_per_s = travel_rpm * pul_per_rev / 60
 # Move 1
 dir = 0 # choose motor direction (0 = ___, 1 = ___)
 travel_deg = 360 # choose distance in degrees for motor to go
+
+big_travel_deg = travel_deg/2
+
 steps = math.floor(travel_deg * steps_per_deg)
 drive(dir, steps, steps_per_s)
 # Pause between moves
