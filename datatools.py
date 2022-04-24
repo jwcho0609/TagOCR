@@ -34,16 +34,20 @@ class DataTools(QWidget):
         self.exp = None
 
         # Layout initialization
-        gb = QGroupBox('Data Control')
+        gb = QGroupBox()
         grid = QGridLayout()
+        grid.setContentsMargins(0, 0, 0, 0)
+        grid.setSpacing(0)
         vboxL = QVBoxLayout()
         vboxR = QVBoxLayout()
 
         # Control buttons (Right vbox)
         self.clearBtn = QPushButton('Clear')
-        self.clearBtn.setFixedSize(150, 50)
+        self.clearBtn.setFixedSize(150, 75)
+        self.clearBtn.setFont(QFont('Arial', 20))
         self.exportBtn = QPushButton('Export')
-        self.exportBtn.setFixedSize(150, 50)
+        self.exportBtn.setFixedSize(150, 75)
+        self.exportBtn.setFont(QFont('Arial', 20))
         self.lastScanlbl = QLabel('Last scanned:')
         self.lastScan = QLabel(lastScanned)
 

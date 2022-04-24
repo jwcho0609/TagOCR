@@ -62,7 +62,7 @@ class ScanAlgo:
         for f in frames:
             print('testing loop entered')
             d = pytesseract.image_to_data(f, lang='eng+fra+spa', output_type=Output.DICT)
-            # print(d['text'])              # print statement for checking parsed out text
+            # print(d['text'])              # print statement for checking parsed out text        self.span.setFixedSize(100, 25)
 
             # If 1 or less words recognized, please rescan
             print('testing')
