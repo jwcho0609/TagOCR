@@ -15,7 +15,7 @@ import RPi.GPIO as GPIO
 
 import datatools
 
-led = 15
+led = 22
 # GPIO.setmode(GPIO.BOARD)
 GPIO.setup(led, GPIO.OUT)
 GPIO.output(led, True)
