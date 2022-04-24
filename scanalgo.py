@@ -78,6 +78,8 @@ class ScanAlgo:
             self.mainWind.status.setStyleSheet("color: blue;"
                                                "background-color: #87CEFA;")
             self.mainWind.status.setText('status')
+            GPIO.output(led, True)
+
         # i = random.randint(1, 6)
         # tester = cv2.imread(f'test/test{i}.jpg')
         # print(f'test{i}.jpg')
