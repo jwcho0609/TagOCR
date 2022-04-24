@@ -14,7 +14,6 @@ import random
 import RPi.GPIO as GPIO
 
 import datatools
-from gui_sorter import rescan
 
 led = 22
 # GPIO.setmode(GPIO.BOARD)
