@@ -18,6 +18,7 @@ import datatools
 import config as c
 from scanalgo import ScanAlgo
 
+
 cap = cv2.VideoCapture(0)
 scan_algo = ScanAlgo(cap)
 GPIO.setwarnings(False)
@@ -279,6 +280,8 @@ class MainWindow(QWidget):
     def quitAct(self):
         print('Quit')
         
+def test():
+    import motor_drive
 
 
 if __name__ == '__main__':
