@@ -34,7 +34,6 @@ class DataTools(QWidget):
         self.exp = None
 
         # Layout initialization
-        gb = QGroupBox()
         grid = QGridLayout()
         grid.setContentsMargins(0, 0, 0, 0)
         grid.setSpacing(0)
@@ -81,12 +80,9 @@ class DataTools(QWidget):
         # Layout settings for grid
         grid.addWidget(gb2, 0, 0)
         grid.addLayout(vboxR, 0, 1)
-        gb.setLayout(grid)
 
         # Initialize the toolbox layout
-        layout = QGridLayout()
-        self.setLayout(layout)
-        layout.addWidget(gb)
+        self.setLayout(grid)
 
         self.clearBtn.clicked.connect(self.clear)
         self.exportBtn.clicked.connect(self.export)

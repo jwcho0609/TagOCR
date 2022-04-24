@@ -20,6 +20,7 @@ from scanalgo import ScanAlgo
 
 cap = cv2.VideoCapture(0)
 scan_algo = ScanAlgo(cap)
+GPIO.setwarnings(False)
 
 
 class scanner(QRunnable):
@@ -57,28 +58,19 @@ class scanner(QRunnable):
             self.status.setText("Polyester")
             self.tools.lastScan.setText('Polyester')
             self.poly.setStyleSheet("color: green;"
-                                    "background-color: #7FFFD4;"
-                                    "border-style: solid;"
-                                    "border-width: 3px;"
-                                    "border-color: #1E90FF")
+                                    "background-color: #7FFFD4;")
 
         elif lastScanned == 'Spandex':
             self.status.setText("Spandex")
             self.tools.lastScan.setText('Spandex')
             self.span.setStyleSheet("color: green;"
-                                    "background-color: #7FFFD4;"
-                                    "border-style: solid;"
-                                    "border-width: 3px;"
-                                    "border-color: #1E90FF")
+                                    "background-color: #7FFFD4;")
 
         elif lastScanned == 'Cotton':
             self.status.setText("Cotton")
             self.tools.lastScan.setText('Cotton')
             self.cot.setStyleSheet("color: green;"
-                                   "background-color: #7FFFD4;"
-                                   "border-style: solid;"
-                                   "border-width: 3px;"
-                                   "border-color: #1E90FF")
+                                   "background-color: #7FFFD4;")
 
         elif lastScanned == 'Unknown':
             self.status.setText("Unknown")
@@ -98,20 +90,11 @@ class scanner(QRunnable):
         self.status.setStyleSheet("color: blue;"
                                   "background-color: #87CEFA;")
         self.poly.setStyleSheet("color: blue;"
-                                "background-color: #87CEFA;"
-                                "border-style: solid;"
-                                "border-width: 3px;"
-                                "border-color: #1E90FF")
+                                "background-color: #87CEFA;")
         self.span.setStyleSheet("color: blue;"
-                                "background-color: #87CEFA;"
-                                "border-style: solid;"
-                                "border-width: 3px;"
-                                "border-color: #1E90FF")
+                                "background-color: #87CEFA;")
         self.cot.setStyleSheet("color: blue;"
-                               "background-color: #87CEFA;"
-                               "border-style: solid;"
-                               "border-width: 3px;"
-                               "border-color: #1E90FF")
+                               "background-color: #87CEFA;")
         self.poly.setText(f'Polyester\n0%')
         self.span.setText(f'Spandex\n0%')
         self.cot.setText(f'Cotton\n0%')
@@ -172,51 +155,42 @@ class MainWindow(QWidget):
 
         # Widgets for each material
         self.poly = QLabel('Polyester\n0%')
-        self.poly.setFixedSize(150, 30)
-        self.poly.setFont(QFont('Arial', 12))
+        self.poly.setFixedSize(153, 60)
+        self.poly.setFont(QFont('Arial', 13))
         self.poly.setAlignment(QtCore.Qt.AlignCenter)
         self.poly.setStyleSheet("color: blue;"
-                                "background-color: #87CEFA;"
-                                "border-style: solid;"
-                                "border-width: 3px;"
-                                "border-color: #1E90FF")
+                                "background-color: #87CEFA;")
 
         self.span = QLabel('Spandex\n0%')
-        self.span.setFixedSize(150, 30)
+        self.span.setFixedSize(153, 60)
         self.span.setAlignment(QtCore.Qt.AlignCenter)
-        self.span.setFont(QFont('Arial', 12))
+        self.span.setFont(QFont('Arial', 13))
         self.span.setStyleSheet("color: blue;"
-                                "background-color: #87CEFA;"
-                                "border-style: solid;"
-                                "border-width: 3px;"
-                                "border-color: #1E90FF")
+                                "background-color: #87CEFA;")
 
         self.cot = QLabel('Cotton\n0%')
-        self.cot.setFixedSize(150, 30)
+        self.cot.setFixedSize(153, 60)
         self.cot.setAlignment(QtCore.Qt.AlignCenter)
-        self.cot.setFont(QFont('Helvetica', 12))
+        self.cot.setFont(QFont('Helvetica', 13))
         self.cot.setStyleSheet("color: blue;"
-                               "background-color: #87CEFA;"
-                               "border-style: solid;"
-                               "border-width: 3px;"
-                               "border-color: #1E90FF")
+                               "background-color: #87CEFA;")
 
         hboxMat.addWidget(self.poly)
         hboxMat.addWidget(self.span)
         hboxMat.addWidget(self.cot)
-        hboxMat.setContentsMargins(0, 0, 0, 0)
+        hboxMat.setContentsMargins(0, 1, 0, 0)
         hboxMat.setSpacing(0)
 
         # Button for opening settings
         self.setBtn = QPushButton()
         self.setBtn.setIcon(QIcon('source/icon_setting.png'))
-        self.setBtn.setIconSize(QtCore.QSize(30, 30))
+        self.setBtn.setIconSize(QtCore.QSize(50, 50))
         self.setBtn.clicked.connect(self.settings_window)
-        self.setBtn.setFixedSize(50, 50)
+        self.setBtn.setFixedSize(80, 80)
 
         # Widget for quitting the app
         self.quitBtn = QPushButton('Quit', self)
-        self.quitBtn.setFixedSize(50, 50)
+        self.quitBtn.setFixedSize(80, 80)
 
         # Right panel buttons
         hboxR = QHBoxLayout()
@@ -238,6 +212,8 @@ class MainWindow(QWidget):
         self.th.start()
 
         # Right vbox
+        vboxR.setContentsMargins(0, 0, 0, 0)
+        vboxR.setSpacing(0)
         hboxR.addWidget(self.scanBtn)
         hboxR.addWidget(self.status)
         vboxR.addLayout(hboxR)
