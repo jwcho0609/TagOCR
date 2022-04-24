@@ -18,6 +18,7 @@ import datatools
 led = 15
 GPIO.setmode(GPIO.BOARD)
 GPIO.setup(led, GPIO.OUT)
+GPIO.output(15, True)
 
 
 class ScanAlgo:
@@ -43,24 +44,22 @@ class ScanAlgo:
         return cv2.Canny(image, 100, 200)
 
     def capture(self):
-        global led
-
-        GPIO.output(led, True)
+        # GPIO.output(led, True)
         ret, self.frame1 = self.camera.read()
-        # # cv2.imwrite('img1.jpg', frame)
-        GPIO.output(led, False)
+        cv2.imwrite('img1.jpg', self.frame1)
+        # GPIO.output(led, False)
         sleep(0.05)
 
-        GPIO.output(led, True)
+        # GPIO.output(led, True)
         ret, self.frame2 = self.camera.read()
         # # cv2.imwrite('img2.jpg', frame1)
-        GPIO.output(led, False)
+        # GPIO.output(led, False)
         sleep(0.05)
 
-        GPIO.output(led, True)
+        # GPIO.output(led, True)
         ret, self.frame3 = self.camera.read()
         # # cv2.imwrite('img3.jpg', frame2)
-        GPIO.output(led, False)
+        GPIO.output(15, False)
         sleep(0.05)
 
         self.performOCR([self.frame1, self.frame2, self.frame3])
@@ -126,6 +125,7 @@ class ScanAlgo:
         print(f"Cotton: {cotPer} %\n")
 
         datatools.addItem(polyPer, spanPer, cotPer)
+	GPIO.output(15, True)
 
     def test(self):
         print('testing in the scanning algorithm')
