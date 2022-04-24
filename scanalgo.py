@@ -70,12 +70,13 @@ class ScanAlgo:
         out = self.performOCR([self.frame1])
 
         if not out:
+            datatools.lastScanned = 'rescan'
             self.mainWind.status.setStyleSheet("color: red;"
-                                          "background-color: #FF6464;")
+                                               "background-color: #FF6464;")
             self.mainWind.status.setText('Please rescan')
             sleep(1)
             self.mainWind.status.setStyleSheet("color: blue;"
-                                          "background-color: #87CEFA;")
+                                               "background-color: #87CEFA;")
             self.mainWind.status.setText('status')
         # i = random.randint(1, 6)
         # tester = cv2.imread(f'test/test{i}.jpg')

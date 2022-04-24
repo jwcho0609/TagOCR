@@ -42,6 +42,9 @@ class scanner(QRunnable):
 
         lastScanned = datatools.lastScanned
 
+        if lastScanned == 'rescan':
+            return
+
         self.status.setStyleSheet("color: green;"
                                   "background-color: #7FFFD4;")
 
@@ -76,7 +79,7 @@ class scanner(QRunnable):
                                    "border-width: 3px;"
                                    "border-color: #1E90FF")
 
-        else:
+        elif lastScanned == 'Unknown':
             self.status.setText("Unknown")
             self.tools.lastScan.setText('Unknown')
 
