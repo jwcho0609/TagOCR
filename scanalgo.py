@@ -49,7 +49,7 @@ class ScanAlgo:
         # GPIO.output(led, True)
         ret, self.frame1 = self.camera.read()
         self.frame1 = cv2.rotate(self.frame1, cv2.ROTATE_180)
-        cv2.imwrite('img1.jpg', self.frame1)
+        #cv2.imwrite('img1.jpg', self.frame1)
         # GPIO.output(led, False)
         sleep(0.05)
 
@@ -92,7 +92,7 @@ class ScanAlgo:
         for f in frames:
             print('testing loop entered')
             d = pytesseract.image_to_data(f, lang='eng+fra+spa', output_type=Output.DICT)
-            # print(d['text'])  # print statement for checking parsed out text        self.span.setFixedSize(100, 25)
+            print(d['text'])  # print statement for checking parsed out text        self.span.setFixedSize(100, 25)
 
             # If 1 or less words recognized, please rescan
             print('testing')
