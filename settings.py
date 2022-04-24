@@ -10,7 +10,7 @@ from PyQt5.QtGui import *
 import config as c
 import math
 from time import sleep
-import RPi.GPIO as GPIO
+# import RPi.GPIO as GPIO
 
 
 PUL = c.PUL
@@ -18,10 +18,10 @@ DIR = c.DIR
 ENA = c.ENA
 
 # Assign pins based on BCM mode
-GPIO.setmode(GPIO.BCM)
-GPIO.setup(PUL, GPIO.OUT)
-GPIO.setup(DIR, GPIO.OUT)
-GPIO.setup(ENA, GPIO.OUT)
+# GPIO.setmode(GPIO.BCM)
+# GPIO.setup(PUL, GPIO.OUT)
+# GPIO.setup(DIR, GPIO.OUT)
+# GPIO.setup(ENA, GPIO.OUT)
 
 
 class MotorThread(QRunnable):
@@ -35,28 +35,28 @@ class MotorThread(QRunnable):
         print("Testing pressed...")
 
         # Enable motor
-        GPIO.output(ENA, GPIO.HIGH)
-
-        # Set motor direction
-        if self.dir == 0:
-            GPIO.output(DIR, GPIO.LOW)
-        elif self.dir == 1:
-            GPIO.output(DIR, GPIO.HIGH)
-        else:
-            None
-
-        # Translate velocity to delay between pulses (s per step)
-        delay = 1 / self.steps_per_s
-
-        # Initialize pulse step
-        GPIO.output(PUL, GPIO.LOW)
-
-        # Driving loop
-        for i in range(self.steps):
-            GPIO.output(PUL, GPIO.HIGH)
-            sleep(delay / 2)
-            GPIO.output(PUL, GPIO.LOW)
-            sleep(delay / 2)
+        # GPIO.output(ENA, GPIO.HIGH)
+        #
+        # # Set motor direction
+        # if self.dir == 0:
+        #     GPIO.output(DIR, GPIO.LOW)
+        # elif self.dir == 1:
+        #     GPIO.output(DIR, GPIO.HIGH)
+        # else:
+        #     None
+        #
+        # # Translate velocity to delay between pulses (s per step)
+        # delay = 1 / self.steps_per_s
+        #
+        # # Initialize pulse step
+        # GPIO.output(PUL, GPIO.LOW)
+        #
+        # # Driving loop
+        # for i in range(self.steps):
+        #     GPIO.output(PUL, GPIO.HIGH)
+        #     sleep(delay / 2)
+        #     GPIO.output(PUL, GPIO.LOW)
+        #     sleep(delay / 2)
 
         sleep(5)
         print("Testing ended...")
