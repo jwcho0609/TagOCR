@@ -24,6 +24,7 @@ GPIO.setup(ENA, GPIO.OUT)
 
 # Assign pins based on BCM mode
 
+
 class MotorThread(QRunnable):
     def __init__(self, direc, steps, steps_per_s):
         super().__init__()
