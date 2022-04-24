@@ -145,7 +145,6 @@ class MainWindow(QWidget):
         global scan_algo
         super().__init__()
         self.w = None
-        scan_algo.setMain(self)
         # Layout declaration
         hbox = QHBoxLayout()
         hboxBot = QHBoxLayout()
@@ -260,6 +259,7 @@ class MainWindow(QWidget):
 
         self.quitBtn.clicked.connect(self.quitAct)
         self.scanBtn.clicked.connect(self.scan)
+        scan_algo.setMain(self)
 
         self.setWindowTitle('TagOCR by The Bee\'s Knees')
         self.setFixedSize(800, 450)
