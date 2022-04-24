@@ -60,6 +60,10 @@ class MotorThread(QRunnable):
             sleep(delay / 2)
 
         sleep(5)
+        print(self.steps)
+        print(self.steps_per_s)
+        travel_time = (1 / self.steps_per_s) * self.steps
+        print(travel_time)
         print("Testing ended...")
 
 
