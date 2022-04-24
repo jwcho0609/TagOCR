@@ -16,9 +16,9 @@ import RPi.GPIO as GPIO
 import datatools
 
 led = 15
-GPIO.setmode(GPIO.BOARD)
+# GPIO.setmode(GPIO.BOARD)
 GPIO.setup(led, GPIO.OUT)
-GPIO.output(15, True)
+GPIO.output(led, True)
 
 
 class ScanAlgo:
