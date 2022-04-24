@@ -11,6 +11,7 @@ import cv2
 import math
 from time import sleep
 import random
+import RPi.GPIO as GPIO
 
 import settings
 import datatools
@@ -288,6 +289,7 @@ class MainWindow(QWidget):
 
         if reply == QMessageBox.Yes:
             self.th.stop()
+            GPIO.cleanup()
             event.accept()
         else:
             event.ignore()
