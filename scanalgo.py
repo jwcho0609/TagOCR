@@ -47,23 +47,26 @@ class ScanAlgo:
         global led
         # GPIO.output(led, True)
         ret, self.frame1 = self.camera.read()
+        self.frame1 = cv2.rotate(self.frame1, cv2.ROTATE_180)
         cv2.imwrite('img1.jpg', self.frame1)
         # GPIO.output(led, False)
         sleep(0.05)
 
         # GPIO.output(led, True)
         ret, self.frame2 = self.camera.read()
+        self.frame2 = cv2.rotate(self.frame2, cv2.ROTATE_180)
         # # cv2.imwrite('img2.jpg', frame1)
         # GPIO.output(led, False)
         sleep(0.05)
 
         # GPIO.output(led, True)
         ret, self.frame3 = self.camera.read()
+        self.frame3 = cv2.rotate(self.frame3, cv2.ROTATE_180)
         # # cv2.imwrite('img3.jpg', frame2)
         GPIO.output(led, False)
         sleep(0.05)
 
-        self.performOCR([self.frame1, self.frame2, self.frame3])
+        self.performOCR([self.frame1])
         # i = random.randint(1, 6)
         # tester = cv2.imread(f'test/test{i}.jpg')
         # print(f'test{i}.jpg')
