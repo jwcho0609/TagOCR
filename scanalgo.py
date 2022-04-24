@@ -74,7 +74,7 @@ class ScanAlgo:
             self.mainWind.status.setStyleSheet("color: red;"
                                                "background-color: #FF6464;")
             self.mainWind.status.setText('Please rescan')
-            sleep(1)
+            sleep(1.5)
             self.mainWind.status.setStyleSheet("color: blue;"
                                                "background-color: #87CEFA;")
             self.mainWind.status.setText('status')

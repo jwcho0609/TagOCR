@@ -43,6 +43,7 @@ class scanner(QRunnable):
         lastScanned = datatools.lastScanned
 
         if lastScanned == 'rescan':
+            self.scan.setEnabled(True)
             return
 
         self.status.setStyleSheet("color: green;"
@@ -93,7 +94,7 @@ class scanner(QRunnable):
         #
         #     sleep(1)
 
-        sleep(1)
+        sleep(1.5)
         self.status.setStyleSheet("color: blue;"
                                   "background-color: #87CEFA;")
         self.poly.setStyleSheet("color: blue;"
