@@ -29,6 +29,7 @@ class ScanAlgo:
         self.frame1 = None
         self.frame2 = None
         self.frame3 = None
+        self.mainWind = None
 
     def get_grayscale(self, image):
         return cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
@@ -69,7 +70,13 @@ class ScanAlgo:
         out = self.performOCR([self.frame1])
 
         if not out:
-            rescan()
+            self.mainWind.status.setStyleSheet("color: red;"
+                                          "background-color: #FF6464;")
+            self.mainWind.status.setText('Please rescan')
+            sleep(1)
+            self.mainWind.status.setStyleSheet("color: blue;"
+                                          "background-color: #87CEFA;")
+            self.mainWind.status.setText('status')
         # i = random.randint(1, 6)
         # tester = cv2.imread(f'test/test{i}.jpg')
         # print(f'test{i}.jpg')
@@ -137,10 +144,4 @@ class ScanAlgo:
         return 1
 
     def setMain(self, mainWind):
-        mainWind.status.setStyleSheet("color: red;"
-                                      "background-color: #FF6464;")
-        mainWind.status.setText('Please rescan')
-        sleep(1)
-        mainWind.status.setStyleSheet("color: blue;"
-                                      "background-color: #87CEFA;")
-        mainWind.status.setText('status')
+        self.mainWind = mainWind
