@@ -125,11 +125,11 @@ class CameraThread(QThread):
             ret, frame = cap.read()
             if ret:
                 rgbImage = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-                # rgbImage = cv2.rotate(rgbImage, cv2.ROTATE_90_CLOCKWISE)
+                rgbImage = cv2.rotate(rgbImage, cv2.ROTATE_180)
                 h, w, ch = rgbImage.shape
                 bytesPerLine = ch * w
                 convertToQtFormat = QImage(rgbImage.data, w, h, bytesPerLine, QImage.Format_RGB888)
-                p = convertToQtFormat.scaled(int(480*(450/640)), 450, Qt.KeepAspectRatio)
+                p = convertToQtFormat.scaled(int(480*(450/640)), 450)
                 self.changePixmap.emit(p)
 
     def stop(self):

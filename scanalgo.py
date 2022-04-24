@@ -38,23 +38,23 @@ class ScanAlgo:
         return cv2.Canny(image, 100, 200)
 
     def capture(self):
-        # ret, self.frame1 = self.camera.read()
+        ret, self.frame1 = self.camera.read()
         # # cv2.imwrite('img1.jpg', frame)
-        # sleep(0.05)
+        sleep(0.05)
         #
-        # ret, self.frame2 = self.camera.read()
+        ret, self.frame2 = self.camera.read()
         # # cv2.imwrite('img2.jpg', frame1)
-        # sleep(0.05)
+        sleep(0.05)
         #
-        # ret, self.frame3 = self.camera.read()
+        ret, self.frame3 = self.camera.read()
         # # cv2.imwrite('img3.jpg', frame2)
-        # sleep(0.05)
+        sleep(0.05)
 
-        # self.performOCR([self.frame1, self.frame2, self.frame3])
-        i = random.randint(1, 6)
-        tester = cv2.imread(f'test/test{i}.jpg')
-        print(f'test{i}.jpg')
-        self.performOCR([tester])
+        self.performOCR([self.frame1, self.frame2, self.frame3])
+        # i = random.randint(1, 6)
+        # tester = cv2.imread(f'test/test{i}.jpg')
+        # print(f'test{i}.jpg')
+        # self.performOCR([tester])
 
     def performOCR(self, frames):
         polyPer, cotPer, spanPer = [0, 0, 0]
@@ -62,7 +62,7 @@ class ScanAlgo:
         for f in frames:
             print('testing loop entered')
             d = pytesseract.image_to_data(f, lang='eng+fra+spa', output_type=Output.DICT)
-            # print(d['text'])              # print statement for checking parsed out text        self.span.setFixedSize(100, 25)
+            print(d['text'])              # print statement for checking parsed out text        self.span.setFixedSize(100, 25)
 
             # If 1 or less words recognized, please rescan
             print('testing')
