@@ -100,6 +100,9 @@ class ScanAlgo:
                 print("Please Rescan")
                 return 0
 
+            if not ''.join(d['text']):
+                return 0
+
             # parse through the array of texts scanned
             for i in range(len(d['text'])):
                 t = d['text'][i]
