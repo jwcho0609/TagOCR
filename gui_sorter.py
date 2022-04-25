@@ -90,13 +90,13 @@ class scanner(QRunnable):
         self.poly.setText(f'Polyester\n0%')
         self.span.setText(f'Spandex\n0%')
         self.cot.setText(f'Cotton\n0%')
-    
+
         self.status.setText("Status")
         self.scan.setEnabled(True)
         self.drive()
 
     def drive(self):
-        self.settings.test_drive()
+        self.settings.test_drive2(1, 180)
 
 
 class CameraThread(QThread):

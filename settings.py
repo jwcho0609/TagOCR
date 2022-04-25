@@ -205,10 +205,17 @@ class SettingsWindow(QWidget):
         self.status.setStyleSheet("color: red")
 
     def test_drive(self):
-        threadCount = QThreadPool.globalInstance().maxThreadCount()
-        print(threadCount)
+        # threadCount = QThreadPool.globalInstance().maxThreadCount()
+        # print(threadCount)
         steps = math.floor(self.trv_spin.value() * c.steps_per_degree)
         direction = int(self.dir_cb.currentText())
+        steps_per_s = c.travel_rpm * c.pulse_per_rev / 60
+        thread = MotorThread(direction, steps, steps_per_s)
+        c.pool.start(thread)
+
+    def test_drive2(self, direction, travel_deg):
+        steps = math.floor(travel_deg * c.steps_per_degree)
+        direction = int(direction)
         steps_per_s = c.travel_rpm * c.pulse_per_rev / 60
         thread = MotorThread(direction, steps, steps_per_s)
         c.pool.start(thread)
