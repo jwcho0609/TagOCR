@@ -11,6 +11,6 @@ ENA = 16
 
 pulse_per_rev = 400
 steps_per_degree = pulse_per_rev / 360
-travel_rpm = 40
+travel_rpm = 20
 
 pool = QThreadPool.globalInstance()

@@ -39,6 +39,10 @@ class scanner(QRunnable):
         global scan_algo
         # sleep(2)
 
+        currPos = datatools.lastScanned
+        if currPos == 'None':
+            currPos = 'Unknown'
+
         # call algorithm to capture frames and update the data accordingly
         scan_algo.capture()
         self.tools.update()
@@ -78,6 +82,9 @@ class scanner(QRunnable):
             self.status.setText("Unknown")
             self.tools.lastScan.setText('Unknown')
 
+        # drive the motor
+        self.drive(currPos, lastScanned)
+
         sleep(1.5)
         self.status.setStyleSheet("color: blue;"
                                   "background-color: #87CEFA;")
@@ -93,10 +100,61 @@ class scanner(QRunnable):
 
         self.status.setText("Status")
         self.scan.setEnabled(True)
-        self.drive()
 
-    def drive(self):
-        self.settings.test_drive2(1, 180)
+    def drive(self, currPos, new):
+        if currPos == 'Unknown':
+            if new == 'Polyester':
+                direction = 0
+                steps = 1
+            elif new == 'Spandex':
+                direction = 0
+                steps = 2
+            elif new == 'Cotton':
+                direction = 1
+                steps = 1
+            else:
+                return
+
+        elif currPos == 'Polyester':
+            if new == 'Unknown':
+                direction = 1
+                steps = 1
+            elif new == 'Spandex':
+                direction = 0
+                steps = 1
+            elif new == 'Cotton':
+                direction = 0
+                steps = 2
+            else:
+                return
+
+        elif currPos == 'Spandex'
+            if new == 'Polyester':
+                direction = 1
+                steps = 1
+            elif new == 'Unknown':
+                direction = 0
+                steps = 2
+            elif new == 'Cotton':
+                direction = 0
+                steps = 1
+            else:
+                return
+
+        else:
+            if new == 'Polyester':
+                direction = 0
+                steps = 2
+            elif new == 'Spandex':
+                direction = 1
+                steps = 1
+            elif new == 'Unknown':
+                direction = 0
+                steps = 1
+            else:
+                return
+
+        self.settings.test_drive2(direction, 180*steps)
 
 
 class CameraThread(QThread):
