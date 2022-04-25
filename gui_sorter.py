@@ -51,6 +51,7 @@ class scanner(QRunnable):
 
         if lastScanned == 'rescan':
             self.scan.setEnabled(True)
+            datatools.lastScanned = currPos
             return
 
         self.status.setStyleSheet("color: green;"
