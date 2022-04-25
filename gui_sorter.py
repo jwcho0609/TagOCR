@@ -90,7 +90,9 @@ class scanner(QRunnable):
         elif lastScanned == 'Unknown':
             self.status.setText("Unknown")
             self.tools.lastScan.setText('Unknown')
-
+        
+        sleep(0.25)
+        
         # drive the motor
         self.drive(currPos, lastScanned)
 
@@ -325,6 +327,7 @@ class MainWindow(QWidget):
 
     def scan(self):
         self.status.setText("Scanning")
+        self.unkBtn.setEnabled(False)
         self.scanBtn.setEnabled(False)
         scanThread = scanner(self.status, self.tools, self.scanBtn, self.poly, self.span, self.cot, self.w, self.unkBtn, False)
         c.pool.start(scanThread)

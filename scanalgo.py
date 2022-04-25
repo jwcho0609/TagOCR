@@ -93,8 +93,11 @@ class ScanAlgo:
             polyPer, cotPer, spanPer = [0, 0, 0]
             print('testing loop entered')
 
-            f = self.thresholding(self.get_grayscale(f))
-            f = f[1]
+            try:
+                f = self.thresholding(self.get_grayscale(f))
+                f = f[1]
+            except:
+                return 0
             # cv2.imwrite('img1.jpg', f)
 
 
