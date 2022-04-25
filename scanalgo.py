@@ -33,19 +33,6 @@ class ScanAlgo:
         self.frame3 = None
         self.mainWind = None
 
-    def get_grayscale(self, image):
-        return cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-
-    def thresholding(self, image):
-        return cv2.threshold(image, 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)[1]
-
-    def opening(self, image):
-        kernel = np.ones((5, 5), np.uint8)
-        return cv2.morphologyEx(image, cv2.MORPH_OPEN, kernel)
-
-    def canny(self, image):
-        return cv2.Canny(image, 100, 200)
-
     def capture(self):
         global led, resetCount
         # GPIO.output(led, True)
@@ -80,11 +67,13 @@ class ScanAlgo:
                 self.mainWind.status.setText('Unknown')
                 polyPer, spanPer, cotPer = [0, 0, 0]
                 datatools.addItem(polyPer, spanPer, cotPer)
+                resetCount = 0
             else:
                 self.mainWind.status.setStyleSheet("color: red;"
                                                    "background-color: #FF6464;")
                 self.mainWind.status.setText('Please rescan')
             sleep(1.5)
+            print('test')
             self.mainWind.status.setStyleSheet("color: blue;"
                                                "background-color: #87CEFA;")
             self.mainWind.status.setText('status')
@@ -102,7 +91,7 @@ class ScanAlgo:
             except TypeError as error:
                 return 0
 
-            # print(d['text'])  # print statement for checking parsed out text        self.span.setFixedSize(100, 25)
+            print(d['text'])  # print statement for checking parsed out text        self.span.setFixedSize(100, 25)
 
             # If 1 or less words recognized, please rescan
             if len(d['text']) <= 1:
@@ -150,16 +139,20 @@ class ScanAlgo:
                             cotPer = int(prev2.strip('%'))
                         else:
                             cotPer = int(prev.strip('%'))
-
+                
+                print(polyPer)
+                print(cotPer)
+                print(spanPer)
+                
                 if polyPer == 0 and cotPer == 0 and spanPer == 0:
                     print("Unknown, rescanning")
-                elif max(polyPer, spandPer, cottonPer) == polyPer:
+                elif max(polyPer, spanPer, cotPer) == polyPer:
                     print("Polyester")
                     break
-                elif max(polyPer, spandPer, cottonPer) == spanPer:
+                elif max(polyPer, spanPer, cotPer) == spanPer:
                     print("Spandex")
                     break
-                elif max(polyPer, spandPer, cottonPer) == cotPer:
+                elif max(polyPer, spanPer, cotPer) == cotPer:
                     print("Cotton")
                     break
             except:

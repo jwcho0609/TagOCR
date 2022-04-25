@@ -196,14 +196,12 @@ class MainWindow(QWidget):
 
         # Widget for the camera eventually
         self.label1 = QLabel()
-        self.testImg = QPixmap('test.png')
-        self.label1.setPixmap(self.testImg)
         # label1.resize(testImg.width(), testImg.height())
 
         # Widget for the status box
         self.status = QLabel('status')
         self.status.setFixedSize(230, 100)
-        self.status.setFont(QFont('Arial', 25))
+        self.status.setFont(QFont('Comic Sans', 25))
         self.status.setAlignment(QtCore.Qt.AlignCenter)
         self.status.setStyleSheet("color: blue;"
                                   "background-color: #87CEFA;")
@@ -211,7 +209,7 @@ class MainWindow(QWidget):
         # Widgets for each material
         self.poly = QLabel('Polyester\n0%')
         self.poly.setFixedSize(153, 60)
-        self.poly.setFont(QFont('Arial', 13))
+        self.poly.setFont(QFont('Comic Sans', 13))
         self.poly.setAlignment(QtCore.Qt.AlignCenter)
         self.poly.setStyleSheet("color: blue;"
                                 "background-color: #87CEFA;")
@@ -219,14 +217,14 @@ class MainWindow(QWidget):
         self.span = QLabel('Spandex\n0%')
         self.span.setFixedSize(153, 60)
         self.span.setAlignment(QtCore.Qt.AlignCenter)
-        self.span.setFont(QFont('Arial', 13))
+        self.span.setFont(QFont('Comic Sans', 13))
         self.span.setStyleSheet("color: blue;"
                                 "background-color: #87CEFA;")
 
         self.cot = QLabel('Cotton\n0%')
         self.cot.setFixedSize(153, 60)
         self.cot.setAlignment(QtCore.Qt.AlignCenter)
-        self.cot.setFont(QFont('Helvetica', 13))
+        self.cot.setFont(QFont('Comic Sans', 13))
         self.cot.setStyleSheet("color: blue;"
                                "background-color: #87CEFA;")
 
@@ -238,7 +236,7 @@ class MainWindow(QWidget):
 
         # Button for opening settings
         self.setBtn = QPushButton()
-        self.setBtn.setIcon(QIcon('source/icon_setting.png'))
+        self.setBtn.setIcon(QIcon('/home/pi/Desktop/TagOCR/source/icon_setting.png'))
         self.setBtn.setIconSize(QtCore.QSize(50, 50))
         self.setBtn.clicked.connect(self.settings_window)
         self.setBtn.setFixedSize(80, 80)
@@ -254,7 +252,7 @@ class MainWindow(QWidget):
         self.scanBtn = QPushButton('SCAN', self)
         self.scanBtn.setStyleSheet("background-color: #B3A369;")
         self.scanBtn.setFixedSize(230, 100)
-        self.scanBtn.setFont(QFont('Arial', 25))
+        self.scanBtn.setFont(QFont('Comic Sans', 25))
 
         self.tools = datatools.DataTools()
         self.tools.setStyleSheet('background-color: #B3A369;')
@@ -338,6 +336,6 @@ def test():
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
-    app.setWindowIcon(QIcon('source/beeLogo.png'))
+    app.setWindowIcon(QIcon('/home/pi/Desktop/TagOCR/source/beeLogo.png'))
     ex = MainWindow()
     sys.exit(app.exec_())
