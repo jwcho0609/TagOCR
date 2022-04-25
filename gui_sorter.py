@@ -254,7 +254,7 @@ class MainWindow(QWidget):
 
         # Widget for manual tag
         self.unkBtn = QPushButton('Unknown', self)
-        self.unkBtn.setFixedSize(300, 80)
+        self.unkBtn.setFixedSize(250, 80)
 
         # Right panel buttons
         hboxR = QHBoxLayout()
@@ -316,11 +316,6 @@ class MainWindow(QWidget):
     def unkTag(self):
         scanThread = scanner(self.status, self.tools, self.scanBtn, self.poly, self.span, self.cot, self.w, True)
         c.pool.start(scanThread)
-
-        datatools.lastScanned = 'rescan'
-        polyPer, spanPer, cotPer = [0, 0, 0]
-        datatools.addItem(polyPer, spanPer, cotPer)
-        resetCount = 0
 
     def scan(self):
         self.status.setText("Scanning")
