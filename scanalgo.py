@@ -20,6 +20,8 @@ led = 22
 GPIO.setup(led, GPIO.OUT)
 GPIO.output(led, True)
 
+resetCount = 0
+
 
 class ScanAlgo:
 
@@ -45,7 +47,7 @@ class ScanAlgo:
         return cv2.Canny(image, 100, 200)
 
     def capture(self):
-        global led
+        global led, resetCount
         # GPIO.output(led, True)
         ret, self.frame1 = self.camera.read()
         self.frame1 = cv2.rotate(self.frame1, cv2.ROTATE_180)
@@ -67,32 +69,33 @@ class ScanAlgo:
         GPIO.output(led, False)
         sleep(0.05)
 
-        try:
-            out = self.performOCR([self.frame1, self.frame2, self.frame3])
-        except:
-            out = 0
+        out = self.performOCR([self.frame1, self.frame2, self.frame3])
 
         if not out:
+            resetCount += 1
             datatools.lastScanned = 'rescan'
-            self.mainWind.status.setStyleSheet("color: red;"
-                                               "background-color: #FF6464;")
-            self.mainWind.status.setText('Please rescan')
+            if resetCount == 3:
+                self.mainWind.status.setStyleSheet("color: green;"
+                                                   "background-color: #7FFFD4;")
+                self.mainWind.status.setText('Unknown')
+                polyPer, spanPer, cotPer = [0, 0, 0]
+                datatools.addItem(polyPer, spanPer, cotPer)
+            else:
+                self.mainWind.status.setStyleSheet("color: red;"
+                                                   "background-color: #FF6464;")
+                self.mainWind.status.setText('Please rescan')
             sleep(1.5)
             self.mainWind.status.setStyleSheet("color: blue;"
                                                "background-color: #87CEFA;")
             self.mainWind.status.setText('status')
             GPIO.output(led, True)
 
-        # i = random.randint(1, 6)
-        # tester = cv2.imread(f'test/test{i}.jpg')
-        # print(f'test{i}.jpg')
-        # self.performOCR([tester])
-
     def performOCR(self, frames):
-        global led
-        polyPer, cotPer, spanPer = [0, 0, 0]
+        global led, resetCount
+
         print("OCR REACHED\n----------------")
         for f in frames:
+            polyPer, cotPer, spanPer = [0, 0, 0]
             print('testing loop entered')
             try:
                 d = pytesseract.image_to_data(f, lang='eng+fra+spa', output_type=Output.DICT)
@@ -109,61 +112,65 @@ class ScanAlgo:
             if not ''.join(d['text']):
                 return 0
 
-            # parse through the array of texts scanned
-            for i in range(len(d['text'])):
-                t = d['text'][i]
-                p = i - 1
-                while p >= 1 and len(d['text'][p].strip()) == 0:
+            try:
+                # parse through the array of texts scanned
+                for i in range(len(d['text'])):
+                    t = d['text'][i]
+                    p = i - 1
+                    while p >= 1 and len(d['text'][p].strip()) == 0:
+                        p = p - 1
+                    prev = d['text'][p]
+
                     p = p - 1
-                prev = d['text'][p]
+                    while p >= 0 and len(d['text'][p].strip()) == 0:
+                        p = p - 1
+                    prev2 = d['text'][p]
 
-                p = p - 1
-                while p >= 0 and len(d['text'][p].strip()) == 0:
-                    p = p - 1
-                prev2 = d['text'][p]
+                    if '%' not in prev and '%' not in prev2:
+                        continue
 
-                if '%' not in prev and '%' not in prev2:
-                    continue
+                    t = t.lower()
+                    polydist = 1 - jf.levenshtein_distance(t, 'polyester') / len('polyester')
+                    spandist = jf.jaro_distance(t, 'spandex')
+                    cottondist = jf.jaro_distance(t, 'cotton')
 
-                t = t.lower()
-                polydist = 1 - jf.levenshtein_distance(t, 'polyester') / len('polyester')
-                spandist = jf.jaro_distance(t, 'spandex')
-                cottondist = jf.jaro_distance(t, 'cotton')
+                    if polydist >= 0.75:
+                        if len(prev.strip()) == 1 or len(prev.strip()) > 4:
+                            polyPer = int(prev2.strip('%'))
+                        else:
+                            polyPer = int(prev.strip('%'))
+                    if spandist >= 0.85:
+                        if len(prev.strip()) == 1 or len(prev.strip()) > 4:
+                            # print(prev2)
+                            spanPer = int(prev2.strip('%'))
+                        else:
+                            spanPer = int(prev.strip('%'))
+                    if cottondist >= 0.9:
+                        if len(prev.strip()) == 1 or len(prev.strip()) > 4:
+                            cotPer = int(prev2.strip('%'))
+                        else:
+                            cotPer = int(prev.strip('%'))
 
-                if polydist >= 0.75:
-                    if len(prev.strip()) == 1 or len(prev.strip()) > 4:
-                        polyPer = int(prev2.strip('%'))
-                    else:
-                        polyPer = int(prev.strip('%'))
-                if spandist >= 0.85:
-                    if len(prev.strip()) == 1 or len(prev.strip()) > 4:
-                        print(prev2)
-                        spanPer = int(prev2.strip('%'))
-                    else:
-                        spanPer = int(prev.strip('%'))
-                if cottondist >= 0.9:
-                    if len(prev.strip()) == 1 or len(prev.strip()) > 4:
-                        cotPer = int(prev2.strip('%'))
-                    else:
-                        cotPer = int(prev.strip('%'))
-
-            if polyPer == 0 and cotPer == 0 and spanPer == 0:
-                print("Unknown, rescanning")
-            elif max(polyPer, spandPer, cottonPer) == polyPer:
-                print("Polyester")
-                break
-            elif max(polyPer, spandPer, cottonPer) == spanPer:
-                print("Spandex")
-                break
-            elif max(polyPer, spandPer, cottonPer) == cotPer:
-                print("Cotton")
-                break
+                if polyPer == 0 and cotPer == 0 and spanPer == 0:
+                    print("Unknown, rescanning")
+                elif max(polyPer, spandPer, cottonPer) == polyPer:
+                    print("Polyester")
+                    break
+                elif max(polyPer, spandPer, cottonPer) == spanPer:
+                    print("Spandex")
+                    break
+                elif max(polyPer, spandPer, cottonPer) == cotPer:
+                    print("Cotton")
+                    break
+            except:
+                pass
 
         print(f"Polyester: {polyPer} %")
         print(f"Spandex: {spanPer} %")
         print(f"Cotton: {cotPer} %\n")
 
         datatools.addItem(polyPer, spanPer, cotPer)
+        resetCount = 0
         GPIO.output(led, True)
         return 1
 
