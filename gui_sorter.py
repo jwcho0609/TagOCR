@@ -16,8 +16,8 @@ import RPi.GPIO as GPIO
 import settings
 import datatools
 import config as c
+import scanalgo
 from scanalgo import ScanAlgo
-
 
 cap = cv2.VideoCapture(0)
 scan_algo = ScanAlgo(cap)
@@ -25,7 +25,7 @@ GPIO.setwarnings(False)
 
 
 class scanner(QRunnable):
-    def __init__(self, label, tools, scan, poly, span, cot, settings):
+    def __init__(self, label, tools, scan, poly, span, cot, settings, flag):
         super().__init__()
         self.status = label
         self.tools = tools
@@ -34,6 +34,7 @@ class scanner(QRunnable):
         self.span = span
         self.cot = cot
         self.settings = settings
+        self.flag = flag
 
     def run(self):
         global scan_algo
@@ -44,7 +45,13 @@ class scanner(QRunnable):
             currPos = 'Unknown'
 
         # call algorithm to capture frames and update the data accordingly
-        scan_algo.capture()
+        if not flag:
+            scan_algo.capture()
+        else:
+            polyPer, spanPer, cotPer = [0, 0, 0]
+            datatools.addItem(polyPer, spanPer, cotPer)
+            scanalgo.resetCount = 0
+
         self.tools.update()
 
         lastScanned = datatools.lastScanned
@@ -155,7 +162,7 @@ class scanner(QRunnable):
             else:
                 return
 
-        self.settings.test_drive2(direction, 180*steps)
+        self.settings.test_drive2(direction, 180 * steps)
 
 
 class CameraThread(QThread):
@@ -172,7 +179,7 @@ class CameraThread(QThread):
                 h, w, ch = rgbImage.shape
                 bytesPerLine = ch * w
                 convertToQtFormat = QImage(rgbImage.data, w, h, bytesPerLine, QImage.Format_RGB888)
-                p = convertToQtFormat.scaled(int(480*(450/640)), 450)
+                p = convertToQtFormat.scaled(int(480 * (450 / 640)), 450)
                 self.changePixmap.emit(p)
 
     def stop(self):
@@ -245,6 +252,10 @@ class MainWindow(QWidget):
         self.quitBtn = QPushButton('Quit', self)
         self.quitBtn.setFixedSize(80, 80)
 
+        # Widget for manual tag
+        self.unkBtn = QPushButton('Unknown', self)
+        self.unkBtn.setFixedSize(300, 80)
+
         # Right panel buttons
         hboxR = QHBoxLayout()
         hboxR.setContentsMargins(0, 0, 0, 0)
@@ -258,7 +269,7 @@ class MainWindow(QWidget):
         self.tools.setStyleSheet('background-color: #B3A369;')
 
         # camera
-        self.label2 =QLabel()
+        self.label2 = QLabel()
         self.label2.setFrameShape(QFrame.NoFrame)
         self.th = CameraThread(self)
         self.th.changePixmap.connect(self.setImage)
@@ -274,6 +285,7 @@ class MainWindow(QWidget):
         vboxR.addStretch(1)
         vboxR.addWidget(self.tools)
         # hboxBot.addStretch(1)
+        hboxBot.addWidget(self.unkBtn)
         hboxBot.addWidget(self.setBtn)
         hboxBot.addWidget(self.quitBtn)
         vboxR.addLayout(hboxBot)
@@ -290,6 +302,7 @@ class MainWindow(QWidget):
 
         self.setLayout(hbox)
 
+        self.unkBtn.clicked.connect(self.unkTag)
         self.quitBtn.clicked.connect(self.quitAct)
         self.scanBtn.clicked.connect(self.scan)
         scan_algo.setMain(self)
@@ -300,10 +313,19 @@ class MainWindow(QWidget):
         self.show()
         # self.showMaximized()
 
+    def unkTag(self):
+        scanThread = scanner(self.status, self.tools, self.scanBtn, self.poly, self.span, self.cot, self.w, True)
+        c.pool.start(scanThread)
+
+        datatools.lastScanned = 'rescan'
+        polyPer, spanPer, cotPer = [0, 0, 0]
+        datatools.addItem(polyPer, spanPer, cotPer)
+        resetCount = 0
+
     def scan(self):
         self.status.setText("Scanning")
         self.scanBtn.setEnabled(False)
-        scanThread = scanner(self.status, self.tools, self.scanBtn, self.poly, self.span, self.cot, self.w)
+        scanThread = scanner(self.status, self.tools, self.scanBtn, self.poly, self.span, self.cot, self.w, False)
         c.pool.start(scanThread)
 
     def setImage(self, image):
@@ -328,8 +350,9 @@ class MainWindow(QWidget):
             event.ignore()
 
     def quitAct(self):
-        print('Quit')
-        
+        close()
+
+
 def test():
     import motor_drive
 
