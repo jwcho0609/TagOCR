@@ -128,7 +128,7 @@ class scanner(QRunnable):
             else:
                 return
 
-        elif currPos == 'Spandex'
+        elif currPos == 'Spandex':
             if new == 'Polyester':
                 direction = 1
                 steps = 1
