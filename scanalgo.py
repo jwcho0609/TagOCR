@@ -33,6 +33,12 @@ class ScanAlgo:
         self.frame3 = None
         self.mainWind = None
 
+    def get_grayscale(self, image):
+        return cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+
+    def thresholding(self, image):
+        return cv2.threshold(image, 100, 255, cv2.THRESH_BINARY)
+
     def capture(self):
         global led, resetCount
         # GPIO.output(led, True)
@@ -86,6 +92,12 @@ class ScanAlgo:
         for f in frames:
             polyPer, cotPer, spanPer = [0, 0, 0]
             print('testing loop entered')
+
+            try:
+                f = self.thresholding(self.get_grayscale(f))
+            except:
+                return 0
+
             try:
                 d = pytesseract.image_to_data(f, lang='eng+fra+spa', output_type=Output.DICT)
             except TypeError as error:
