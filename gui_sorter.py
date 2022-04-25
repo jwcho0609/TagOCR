@@ -251,10 +251,12 @@ class MainWindow(QWidget):
         # Widget for quitting the app
         self.quitBtn = QPushButton('Quit', self)
         self.quitBtn.setFixedSize(80, 80)
+        self.quitBtn.setFont(QFont('Comic sans', 16))
 
         # Widget for manual tag
         self.unkBtn = QPushButton('Unknown', self)
         self.unkBtn.setFixedSize(250, 80)
+        self.unkBtn.setFont(QFont('Comic sans', 18))
 
         # Right panel buttons
         hboxR = QHBoxLayout()
