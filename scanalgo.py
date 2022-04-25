@@ -44,7 +44,7 @@ class ScanAlgo:
         # GPIO.output(led, True)
         ret, self.frame1 = self.camera.read()
         self.frame1 = cv2.rotate(self.frame1, cv2.ROTATE_180)
-        #cv2.imwrite('img1.jpg', self.frame1)
+        # cv2.imwrite('img1.jpg', self.frame1)
         # GPIO.output(led, False)
         sleep(0.05)
 
@@ -93,10 +93,10 @@ class ScanAlgo:
             polyPer, cotPer, spanPer = [0, 0, 0]
             print('testing loop entered')
 
-            try:
-                f = self.thresholding(self.get_grayscale(f))
-            except:
-                return 0
+            f = self.thresholding(self.get_grayscale(f))
+            f = f[1]
+            # cv2.imwrite('img1.jpg', f)
+
 
             try:
                 d = pytesseract.image_to_data(f, lang='eng+fra+spa', output_type=Output.DICT)

@@ -25,7 +25,7 @@ GPIO.setwarnings(False)
 
 
 class scanner(QRunnable):
-    def __init__(self, label, tools, scan, poly, span, cot, settings, flag):
+    def __init__(self, label, tools, scan, poly, span, cot, settings, unk, flag):
         super().__init__()
         self.status = label
         self.tools = tools
@@ -34,6 +34,7 @@ class scanner(QRunnable):
         self.span = span
         self.cot = cot
         self.settings = settings
+        self.unkBtn = unk
         self.flag = flag
 
     def run(self):
@@ -107,6 +108,7 @@ class scanner(QRunnable):
         self.cot.setText(f'Cotton\n0%')
 
         self.status.setText("Status")
+        self.unkBtn.setEnabled(True)
         self.scan.setEnabled(True)
 
     def drive(self, currPos, new):
@@ -317,13 +319,14 @@ class MainWindow(QWidget):
 
     def unkTag(self):
         self.scanBtn.setEnabled(False)
-        scanThread = scanner(self.status, self.tools, self.scanBtn, self.poly, self.span, self.cot, self.w, True)
+        self.unkBtn.setEnabled(False)
+        scanThread = scanner(self.status, self.tools, self.scanBtn, self.poly, self.span, self.cot, self.w, self.unkBtn, True)
         c.pool.start(scanThread)
 
     def scan(self):
         self.status.setText("Scanning")
         self.scanBtn.setEnabled(False)
-        scanThread = scanner(self.status, self.tools, self.scanBtn, self.poly, self.span, self.cot, self.w, False)
+        scanThread = scanner(self.status, self.tools, self.scanBtn, self.poly, self.span, self.cot, self.w, self.unkBtn, False)
         c.pool.start(scanThread)
 
     def setImage(self, image):
@@ -348,7 +351,7 @@ class MainWindow(QWidget):
             event.ignore()
 
     def quitAct(self):
-        close()
+        self.close()
 
 
 def test():
