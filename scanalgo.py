@@ -67,7 +67,10 @@ class ScanAlgo:
         GPIO.output(led, False)
         sleep(0.05)
 
-        out = self.performOCR([self.frame1])
+        try:
+            out = self.performOCR([self.frame1, self.frame2, self.frame3])
+        except:
+            out = 0
 
         if not out:
             datatools.lastScanned = 'rescan'
@@ -99,7 +102,6 @@ class ScanAlgo:
             # print(d['text'])  # print statement for checking parsed out text        self.span.setFixedSize(100, 25)
 
             # If 1 or less words recognized, please rescan
-            print('testing')
             if len(d['text']) <= 1:
                 print("Please Rescan")
                 return 0
@@ -144,6 +146,18 @@ class ScanAlgo:
                         cotPer = int(prev2.strip('%'))
                     else:
                         cotPer = int(prev.strip('%'))
+
+            if polyPer == 0 and cotPer == 0 and spanPer == 0:
+                print("Unknown, rescanning")
+            elif max(polyPer, spandPer, cottonPer) == polyPer:
+                print("Polyester")
+                break
+            elif max(polyPer, spandPer, cottonPer) == spanPer:
+                print("Spandex")
+                break
+            elif max(polyPer, spandPer, cottonPer) == cotPer:
+                print("Cotton")
+                break
 
         print(f"Polyester: {polyPer} %")
         print(f"Spandex: {spanPer} %")
