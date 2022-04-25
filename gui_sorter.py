@@ -45,7 +45,7 @@ class scanner(QRunnable):
             currPos = 'Unknown'
 
         # call algorithm to capture frames and update the data accordingly
-        if not flag:
+        if not self.flag:
             scan_algo.capture()
         else:
             polyPer, spanPer, cotPer = [0, 0, 0]
