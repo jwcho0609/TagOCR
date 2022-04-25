@@ -316,6 +316,7 @@ class MainWindow(QWidget):
         # self.showMaximized()
 
     def unkTag(self):
+        self.scanBtn.setEnabled(False)
         scanThread = scanner(self.status, self.tools, self.scanBtn, self.poly, self.span, self.cot, self.w, True)
         c.pool.start(scanThread)
 
