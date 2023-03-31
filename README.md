@@ -1,4 +1,4 @@
-# Garment Tag Scanning and Sorting
+# Garment Tag Scanning and Sorting for Sustainability
 Senior Capstone Design Project for categorizing clothing based on garment tag information
 created by The Bee's Knees.
 
