@@ -14,9 +14,9 @@ Refer to the final report for a more extensive report and the fabrication packag
 
 ## Final Assembly
 
-![assembly](ReadmeImages/assemb.jpeg)
-![scan1](ReadmeImages/scanner1.jpeg)
-![scan2](ReadmeImages/scanner2.jpeg)
+<img src="ReadmeImages/assemb.jpeg" width="400">
+<img src="ReadmeImages/scan1.jpeg" width="400">
+<img src="ReadmeImages/scan2.jpeg" width="400">
 
 ## Demostration
 
