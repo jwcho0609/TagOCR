@@ -2,6 +2,8 @@
 Senior Capstone Design Project for categorizing clothing based on garment tag information
 created by The Bee's Knees.
 
+Project sponsored by Celestial Theory and advised by Dr. Itzhak Green.
+
 ## Executive Summary
 
 62.5% of used textiles end up in landfills, and only 14.5% recyclable textiles are actually recycled [[1]](#ref1) just in the United States. With this issue in mind, Celestial Theory desires to create an assembly line that can take in recycled clothing and remanufacture the fibers in order to use them in new ways. Starting the process, Celestial Theory needs a device that sorts clothes based on the primary material before the recycling process can begin. The device will be used by an operator that scans the garment’s tag and puts it into the device for sorting. The device should be user-friendly and at its current stage, only focus on readable tags and not damaged or faded tags. However, a workaround should be created in order to keep up the flow of production.
