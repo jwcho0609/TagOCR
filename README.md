@@ -12,7 +12,7 @@ The end goal is for the machine to be as straightforward and user-friendly as po
 
 ## Demo
 
-[![Demo video](ReadmeImages/DemoImage.JPG)](https://www.youtube.com/embed/ESZQh1sgbWA)
+![Demo video](ReadmeImages/demo.gif)
 
 ## References
 
