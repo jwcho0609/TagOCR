@@ -12,4 +12,4 @@ The end goal is for the machine to be as straightforward and user-friendly as po
 
 ## References
 
-<a name="ref1"></a> [1] [“SMART,” Frequently Asked Questions. [Online] Available:] (https://www.smartasn.org/resources/frequently-asked-questions/)
+<a name="ref1"></a> [1] “SMART,” Frequently Asked Questions. [Online] Available: https://www.smartasn.org/resources/frequently-asked-questions/
