@@ -2,7 +2,7 @@
 Senior Capstone Design Project for categorizing clothing based on garment tag information
 created by The Bee's Knees.
 
-Project sponsored by Celestial Theory and advised by Dr. Itzhak Green.
+Project sponsored by [Celestial Theory](https://celestialtheory.com/) and advised by Dr. Itzhak Green.
 
 ## Executive Summary
 
