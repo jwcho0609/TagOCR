@@ -12,7 +12,7 @@ Engaging challenges for this device are scanning garment tags accurately and sor
 
 The end goal is for the machine to be as straightforward and user-friendly as possible while accurately scanning and efficiently sorting. Through testing and adjustments, the team aims to find the optimal motor speeds to match an operator’s pace. The device also will store the information of the clothes being fed through and be able to report the information to the operator.
 
-Refer to the <a href="/Final Report.pdf">final report</a> for a more extensive report and the fabrication package. 
+### Refer to the [final report](https://drive.google.com/file/d/11VzxfLUv5NG98AHOf8EYxWWPzp5fr2s1/view?usp=sharing) for a more extensive report and the fabrication package. 
 
 ## Final Assembly
 
