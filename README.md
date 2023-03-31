@@ -18,7 +18,7 @@ The end goal is for the machine to be as straightforward and user-friendly as po
 
 <img src="ReadmeImages/assemb.jpeg" width="250"><img src="ReadmeImages/scanner1.jpeg" width="250"><img src="ReadmeImages/scanner2.jpeg" width="250">
 
-## Demostration
+## Demonstration
 
 <img src="ReadmeImages/demo.gif" width="800">
 <!-- ![Demo video](ReadmeImages/demo.gif) -->
